@@ -25,7 +25,18 @@ var Observer = function(object) {
         })
 	}
     this.$watch = function(key, callback) {
-    	this.convert(key, this[key], callback);
+    	if (object.hasOwnProperty(key)) {
+            val = object[key];
+            // 这里进行判断，如果还没有遍历到最底层，继续new Observer
+            if (typeof val === 'object') {
+                this.convert(key, this[key], callback);
+            }
+            
+        }
+        else{
+        	this.convert(key, this[key], callback);
+        }
+    	
        
     }
 }
