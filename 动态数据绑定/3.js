@@ -27,12 +27,10 @@ var Observer = function(object) {
     }
     this.$watch = function(key , callback) {
         console.log('1.'+key);
-        for(let key1 in this[key]){
-            
+        for(let key1 in this[key]){            
             if (this[key].hasOwnProperty(key1)) {
                 console.log('next, '+this[key][key1]);
                 let val = this[key][key1];
-                // 这里进行判断，如果还没有遍历到最底层，继续new Observer
                 this.convert(this[key],key1, val, callback);
 
             }
