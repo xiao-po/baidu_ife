@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+
+<style>
+	#animate{
+		position: relative;
+		width: 200px;
+		height: 200px;
+		background-color: grey;
+		left: 0px;
+	}
+
+</style>
+<script>
+var test= {};
+var animate = function(object){
+	for(let name in object){
+		this[name] = object[name];
+	}
+	var speed;
+	var node;
+	var oringinPos;
+	var self = this;
+	var once = true;
+	var timer;
+	(function(el){node = document.querySelector(el);oringinPos = (node.style.left==='')?0:parseInt(node.style.left)})(self.el);
+	var animate = function(target){		
+		timer = setInterval(function(){
+			var offsetleft = (node.style.left==='')?0:parseInt(node.style.left);
+			speed = (target - offsetleft)/10;
+			speed = speed<1?(speed<0?(speed<-1?speed:-1):1):speed;
+			node.style.left =offsetleft+ speed + 'px';
+			test.speed= speed;
+			test.offsetleft= offsetleft;
+			test.target = target; 
+			if (speed>0&&offsetleft >= target) {
+				clearInterval(timer);
+			}else if(speed<0&&offsetleft <= target){
+				clearInterval(timer);
+			}
+		},10)
+	}
+
+	this.stratAnimate = function(){
+		node.onmouseover = function(){
+			if (once) {
+				clearInterval(timer);
+				animate(self.target);
+				once=false;
+			}			
+		}
+		node.onmouseout = function(){
+			console.log('out');
+			once = true;	
+			clearInterval(timer);
+			animate(oringinPos);		
+		}
+	}
+}
+
+function ani1(){
+	var test1= new animate({
+		el:'#animate',
+		target:100
+	});
+	test1.stratAnimate();
+}
+</script>
+<body>
+	<div id="animate"></div>
+	<button onclick="ani1()">动画</button>
+</body>
+</html>
