@@ -1,11 +1,10 @@
 var Vue = function(object) {
     this.data = object.data;
     this.el = object.el;
-    var node;
     var temp;
+    var node;
     var self = this;
     //节点分析，通过el值去解析然后把dom返回的node值里面
-    //这个地方略有欠缺不应该用这种if...else...判断。应当使用document.querySelector
     var complier = function() {
             //id class 以及tag解析
             if (self.el[0] === '#') {
@@ -25,8 +24,6 @@ var Vue = function(object) {
             temp = node.innerHTML;
         }
     //分析{{}}表达式里面内容并提取出来，目前的格式是'{{name.fn}}'能解析成数组['name','fn']
-    //第一个regText是把{{}}以及其中的内容提取出来。
-    //第二个regText是把{{}}里面的name.fn提取出来变成数组['name','fn'].
     var parseTextExp = function(text) {
         var regText = /\{\{(.+?)\}\}/g;
         var regText1 = /(\w+)+?/g;
@@ -45,10 +42,7 @@ var Vue = function(object) {
     	}
     }
     //替换，temp的作用是为了防止多次替换不好提取值或者冲突先使用的缓存，
-    //当你的数据多次替换之后，到时候还需要重新进行正则匹配，或者替换到不该替换的，这是一件很麻烦的事情
-    //这里的replace较上一章节略有不同，我们考虑到与Reflect.defineProperty进行绑定，部分参数进行了改变。
-    //传入参数改成了key以寻找对象的值进行修改。
-    var replaceStr = function(key) {
+    var replace = function(key) {
     	console.log('test');
         let str = parseTextExp(temp);
         let obj = self.data;
@@ -67,11 +61,8 @@ var Vue = function(object) {
         let tempStr = temp.replace('{{' + objname + '}}', value)
         node.innerHTML = tempStr;
     }
-
-
-
-    //这是注册观察者的一个方法
     var Observer = function(object,key,val) {
+    	a = object;
 		if(typeof object === 'object')
 			Reflect.defineProperty(object, key, {
 	            enumerable: true,
@@ -83,7 +74,7 @@ var Vue = function(object) {
 	            	
 	                if (newVal === val) return;
 	                val = newVal;
-	                replaceStr();
+	                replace();
 	            } 
 	        })
 		else{
@@ -91,9 +82,7 @@ var Vue = function(object) {
 		}
 	}
     complier();   	
-    replaceStr();   
-
-    //这是我们需要进行深度遍历寻找子节点并且进行绑定。
+    replace();   
     var bind= function(object){
     	for(let key in object){
 	    	if((typeof object[key]) === 'object' ){
@@ -122,7 +111,6 @@ function run() {
         i++;        
     }else{
         test.data.name.fn = document.getElementById('input').value;
-    }    
+    }
+    
 }
-
-//感谢你看完了这个简单的注释教程，如果你需要和vue一样有一个简单双向绑定input输入框的效果，请在input上添加onkeyup事件
