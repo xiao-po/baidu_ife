@@ -27,40 +27,46 @@ var animate = function(object){
 	var self = this;
 	var once = true;
 	var timer;
-	(function(el){node = document.querySelector(el);oringinPos = (node.style.left==='')?0:parseInt(node.style.left)})(self.el);
-	var animate = function(target){		
-		timer = setInterval(function(){
-			var offsetleft = (node.style.left==='')?0:parseInt(node.style.left);
+	// oringinPos = (node.style.left==='')?0:parseInt(node.style.left)
+	(function(el){node = document.querySelectorAll(el);})(self.el);
+	var animate = function(ani_node,target){		
+		ani_node.timer = setInterval(function(){
+			var offsetleft = (ani_node.style.left==='')?0:parseInt(ani_node.style.left);
 			speed = (target - offsetleft)/10;
 			speed = speed<1?(speed<0?(speed<-1?speed:-1):1):speed;
-			node.style.left =offsetleft+ speed + 'px';
+			ani_node.style.left =offsetleft+ speed + 'px';
 			test.speed= speed;
 			test.offsetleft= offsetleft;
 			test.target = target;
-			test.node = node ; 
+			 
 			if (speed>0&&offsetleft >= target) {
-				clearInterval(timer);
+				clearInterval(ani_node.timer);
 			}else if(speed<0&&offsetleft <= target){
-				clearInterval(timer);
+				clearInterval(ani_node.timer);
 			}
 		},10)
 	}
 
-	this.stratAnimate = function(){
+	this.bind = function(){
+		for(let num_node of node){
+			ani_bind(num_node);
+		}
+		
+	}
+	var ani_bind = function(node){
 		node.onmouseover = function(event){
-			test.event = event;
-			
+			test.node = event.target ;
 			if (once) {
-				clearInterval(timer);
-				animate(self.target);
-				once=false;
+				clearInterval(event.target.timer);
+				animate(event.target,self.target);
+				event.target.once=false;
 			}			
 		}
 		node.onmouseout = function(event){
 			console.log('out');
-			once = true;	
-			clearInterval(timer);
-			animate(oringinPos);		
+			event.target.once = true;	
+			clearInterval(event.target.timer);
+			animate(event.target,1);		
 		}
 	}
 }
@@ -70,7 +76,7 @@ function ani1(){
 		el:'.animate',
 		target:100
 	});
-	test1.stratAnimate();
+	test1.bind();
 }
 </script>
 <body>
