@@ -48,7 +48,6 @@ var Observer = function(object) {
         return text.match(regText)[0].match(regText1);
     }
     //替换，temp的作用是为了防止多次替换不好提取值或者冲突先使用的缓存，
-
     var replace = function(temp) {
         let str = parseTextExp(temp);
         let obj = self.data;
@@ -72,7 +71,8 @@ var Observer = function(object) {
     }
 
 
-     //执行方法
+
+    //执行方法
     complier();
     replace(temp);
 
