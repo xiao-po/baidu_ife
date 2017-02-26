@@ -1,3 +1,4 @@
+
 var Observer = function(object) {
 	if(typeof object === 'object')
 	    return new Proxy(object, {

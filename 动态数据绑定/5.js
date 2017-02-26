@@ -1,3 +1,4 @@
+
 var Vue = function(object) {
     this.data = object.data;
     this.el = object.el;
@@ -126,3 +127,4 @@ function run() {
 }
 
 //感谢你看完了这个简单的注释教程，如果你需要和vue一样有一个简单双向绑定input输入框的效果，请在input上添加onkeyup事件
+

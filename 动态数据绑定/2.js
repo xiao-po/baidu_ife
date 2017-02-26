@@ -1,3 +1,4 @@
+
 var Observer = function(object) {
     //此处是进行注册Observer，至于为什么要遍历到最深处呢，这个涉及第三章的内容，到时候我会解释
 	for(let key in object){
