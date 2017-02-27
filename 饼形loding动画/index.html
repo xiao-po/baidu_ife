@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<style>
+
+#ring {
+    border: 3px solid;
+    border-color: #ff298c #ff298c #ff298c rgba(0, 0, 255, 0);
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+
+    animation: ring 2s linear infinite;
+}
+
+#loding {
+    width: 200px;
+    height: 200px;
+    position: relative;
+}
+#background{
+	width: 0;
+    height: 0;
+    /* background-color: black; */
+    margin: auto;
+    position: relative;
+    top: 50px;
+    border: 50px solid;
+    border-radius: 50%;
+    /* border-color: chocolate; */
+    border-top-color: #fb8bbd;
+    border-right-color: #fb8bbd;
+    border-bottom-color: #ff298c;
+    border-left-color: #ff298c;
+    transform: rotate(45deg);
+}
+#left-semicircle{
+	width: 0;
+    height: 0;
+    margin: auto;
+    position: relative;
+    top: -50px;
+    border: 50px solid;
+    border-radius: 50%;
+    border-top-color: rgba(210, 105, 30, 0);
+    border-right-color: rgba(210, 105, 30, 0);
+    border-bottom-color: #fb8bbd;
+    border-left-color: #fb8bbd;
+    transform: rotate(45deg);
+    animation: leftrotate 2s linear infinite;
+}
+#right-semicircle{
+	width: 0;
+    height: 0;
+    margin: auto;
+    position: relative;
+    top: -150px;
+    border: 50px solid;
+    border-radius: 50%;
+    border-top-color: #ff298c;
+    border-right-color: #ff298c;
+    border-bottom-color: rgba(210, 105, 30, 0);
+    border-left-color: rgba(210, 105, 30, 0);
+    transform: rotate(45deg);
+    z-index: 6;
+    
+    animation: rightrotate 2s linear infinite;
+    animation-delay: 0.5s;
+}
+@keyframes rightrotate
+{
+0%   {transform: rotate(45deg);}
+25%  {transform: rotate(225deg);}
+50%  {transform: rotate(225deg);}
+75%  {transform: rotate(405deg);}
+100% {transform: rotate(405deg);}
+}
+@keyframes leftrotate
+{
+0%   {transform: rotate(45deg);z-index: 5;}
+25%  {transform: rotate(225deg);}
+50%  {transform: rotate(225deg);z-index: 5;}
+50.01%  {transform: rotate(225deg);z-index: 7;}
+75%  {transform: rotate(405deg);}
+100% {transform: rotate(405deg);z-index: 7}
+}
+
+@keyframes ring
+{
+0%   {transform: rotate(45deg);}
+25%  {transform: rotate(135deg);}
+50%  {transform: rotate(225deg);}
+75%  {transform: rotate(315deg);}
+100% {transform: rotate(405deg);}
+}
+</style>
+<script>
+    function doubi(){
+
+        var test= 1;
+        test.test = 1;
+    }
+</script>
+
+<body>
+    <div id="loding">
+        <div id='ring'>
+            <div id='background'></div>
+            <div id='left-semicircle'></div>
+        	<div id='right-semicircle'></div>
+        </div>
+        
+    </div>
+</body>
+
+</html>

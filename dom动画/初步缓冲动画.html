@@ -1,87 +1,98 @@
+<!-- 暂时弃坑 这玩意有点难受hhhh -->
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
+    <meta charset="UTF-8">
+    <title>Document</title>
 </head>
-
 <style>
-	.animate{
-		position: relative;
-		width: 200px;
-		height: 200px;
-		background-color: grey;
-		left: 0px;
-	}
-
+.animate {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    background-color: grey;
+    left: 0px;
+}
 </style>
 <script>
-var test= {};
-var animate = function(object){
-	for(let name in object){
-		this[name] = object[name];
-	}
-	var speed;
-	var node;
-	var oringinPos;
-	var self = this;
-	var once = true;
-	var timer;
-	// oringinPos = (node.style.left==='')?0:parseInt(node.style.left)
-	(function(el){node = document.querySelectorAll(el);})(self.el);
-	var animate = function(ani_node,target){		
-		ani_node.timer = setInterval(function(){
-			var offsetleft = (ani_node.style.left==='')?0:parseInt(ani_node.style.left);
-			speed = (target - offsetleft)/10;
-			speed = speed<1?(speed<0?(speed<-1?speed:-1):1):speed;
-			ani_node.style.left =offsetleft+ speed + 'px';
-			test.speed= speed;
-			test.offsetleft= offsetleft;
-			test.target = target;
-			 
-			if (speed>0&&offsetleft >= target) {
-				clearInterval(ani_node.timer);
-			}else if(speed<0&&offsetleft <= target){
-				clearInterval(ani_node.timer);
-			}
-		},10)
-	}
+var test = {};
+var animate = function(object) {
+    for (let name in object) {
+        this[name] = object[name];
+    }
+    var speed;
+    var node;
+    var oringinPos;
+    var self = this;
+    var once = true;
+    var timer;
+    // client
+    (function(el) {
+        node = document.querySelectorAll(el);
+    })(self.el);
+    var animate = function(ani_node, target, attr) {
+        let attr_temp = attr[0].toUpperCase() + attr.slice(1);
+        test.node = ani_node;
+        ani_node.timer = setInterval(function() {
+            var now_val = (ani_node['client' + attr_temp] === '') ? 0 : parseInt(ani_node['client' + attr_temp]);
+            speed = (target - now_val) / 15;
+            speed = speed < 1 ? (speed < 0 ? (speed < -1 ? speed : -1) : 1) : speed;
+            ani_node.style[attr] = now_val + speed + 'px';
+            test.speed = speed;
+            test.now_val = now_val;
+            test.target = target;
 
-	this.bind = function(){
-		for(let num_node of node){
-			ani_bind(num_node);
-		}
-		
-	}
-	var ani_bind = function(node){
-		node.onmouseover = function(event){
-			test.node = event.target ;
-			if (once) {
-				clearInterval(event.target.timer);
-				animate(event.target,self.target);
-				event.target.once=false;
-			}			
-		}
-		node.onmouseout = function(event){
-			console.log('out');
-			event.target.once = true;	
-			clearInterval(event.target.timer);
-			animate(event.target,1);		
-		}
-	}
+            if (speed > 0 && (now_val - 1) >= target) {
+                clearInterval(ani_node.timer);
+            } else if (speed < 0 && now_val <= (target + 1)) {
+                clearInterval(ani_node.timer);
+            }
+        }, 20)
+    }
+
+    this.bind = function() {
+        for (let num_node of node) {
+            ani_bind(num_node);
+        }
+
+    }
+
+    var ani_start
+    // var ani_bind = function(node) {
+    //     node.oringinPos = node['client' + self.attr[0].toUpperCase() + self.attr.slice(1)];
+    //     node.onmouseover = function(event) {
+    //         test.node = event.target;
+    //         if (once) {
+    //             clearInterval(event.target.timer);
+    //             animate(event.target, self.target, self.attr);
+    //             event.target.once = false;
+    //         }
+    //     }
+    //     node.onmouseout = function(event) {
+    //         event.target.once = true;
+    //         clearInterval(event.target.timer);
+    //         animate(event.target, parseInt(event.target.oringinPos), self.attr);
+    //     }
+    // }
 }
 
-function ani1(){
-	var test1= new animate({
-		el:'.animate',
-		target:100
-	});
-	test1.bind();
+function ani1() {
+    var test1 = new animate({
+        el: '.animate',
+        func: 'ply',
+        target: 500,
+        attr: 'width'
+    });
+    test1.bind();
 }
 </script>
+
 <body>
-	<div class="animate"></div>
-	<div class="animate"></div>
-	<button onclick="ani1()">动画</button>
+    <div class="animate"></div>
+    <div class="animate"></div>
+    <button onclick="ani1()">动画</button>
 </body>
+
 </html>
