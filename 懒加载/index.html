@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<title>Document</title>
+</head>
+<style>
+	body{
+		margin:0;
+	}
+	#title{
+		width: 100%;
+	    height: 44px;
+	    background-color: #f1f1f1;	
+	    border-bottom-width: 1px;
+	    border-bottom-color: #bbbbbb;
+	    border-bottom-style: solid;
+	    text-align: center;
+	    position: fixed;
+	    z-index: 100;
+	}
+	#pages{
+		width: 100%;
+    	height: 100%;
+    	padding-top:44px;
+		z-index: 1;
+    }
+    #pages_after{
+    	width: 100%;
+	    position: relative;
+	    height: 40px;
+	    background-color: #e0e0e0;
+	    text-align: center;
+    }
+    #pages_after>span{
+    	position: relative;
+    	top: 8px;
+    	color: #616569;
+    }
+    #pages_after>span::before{
+		content: '';
+	    position: absolute;
+	    width: 10px;
+	    height: 10px;
+	    border: 2px solid;
+	    top: 4px;
+	    left: -18px;
+	    border-radius: 50%;
+	    border-top-color: rgba(151, 151, 151, 0);
+	    border-right-color: rgb(151, 151, 151);
+	    border-bottom-color: rgb(151, 151, 151);
+	    border-left-color: rgb(151, 151, 151);
+	    animation: lodingrotate 2s linear infinite;
+
+    }
+    #scrollpages>div>ul>li>div{
+	    width: 100%;
+	    /* height: 40px; */
+	    position: relative;
+	    border: solid;
+	    border-top-width: 0px;
+	    border-right-width: 0px;
+	    border-bottom-width: 1px;
+	    border-left-width: 0px;
+	    box-sizing: border-box;
+	    border-color: #c1c1c1;
+	    /* padding-top: 10px; */
+	    padding: 10px;
+	    font-size: 17px;
+	}
+    #scrollpages{
+		width: 100%;
+    	height: 100%;
+
+    }
+    #scrollpages ul{
+    	padding:0px 10px;
+    	margin: 0px;
+    }
+    @keyframes lodingrotate
+	{
+		0%   {transform: rotate(0deg);}
+		50%  {transform: rotate(180deg);}
+		100% {transform: rotate(360deg);}
+	}
+	#scrollpages .scrollbox{
+	    border: solid;
+	    box-sizing: border-box;
+	    width: 100%;
+	    height: 100%;
+	    border-width: 1px 0px 1px 0px;
+	    border-color: grey;
+	}
+	.scrollbox ul::-webkit-scrollbar-thumb{
+		z-index: 1;
+		width: 16px;
+	}
+</style>
+<script>
+	var test;
+	var InfiniteLoding = function(obj){
+		var node;
+		this.data = obj.data;
+		var self = this;
+		var once = true;
+		var bind = function(){			
+			var nodeHeight = node.clientHeight;
+			window.onscroll = function(){
+				let scrolltop = document.body.scrollTop;
+				let bodytop = window.innerHeight;
+				let loding = document.getElementById('pages_after')
+				if(self.data.col > node.childElementCount&&(scrolltop+window.innerHeight) >= nodeHeight) {
+					if(once){
+						setTimeout(function(){
+							insertNode(node);
+						},2000);
+						once = false;
+					}
+				}else if(self.data.col <= node.childElementCount){
+					loding.style.display = 'none';
+				}
+			}
+		}
+		var creatNode = function(){
+			var para=document.createElement('li');
+			para.innerHTML = '<div>'+(node.childElementCount+1)+'</div>';
+			return para;
+		}
+		var insertNode = function(node){
+			for(let i = 0 ; i <= 19 ; i++){
+				node.appendChild(creatNode());
+				if (i == 19) {					
+					once = true;
+				}
+			}
+		}
+		var init = function(){
+			node= document.querySelector(obj.el);
+			bind();
+		}
+		init();
+		test = node;
+		
+		
+	}
+	
+	window.onload = function(){
+		var a = new InfiniteLoding({
+			data:{
+				col:60
+			},
+			el:'.scrollbox ul'
+		});
+	}
+
+</script>
+<body>
+	<div>
+		<div id="title">
+			<span style="position:relative;top: 6px;font-size: 17px;">
+				my app
+			</span>
+		</div>
+		<div id='pages' style="background-color: #e0e0e0;">
+			<div id='scrollpages' style="background-color: white;" >
+				<div class="scrollbox">
+					<ul style="list-style: none;">
+						<li><div>1</div></li>
+						<li><div>2</div></li>
+						<li><div>3</div></li>
+						<li><div>4</div></li>
+						<li><div>5</div></li>
+						<li><div>6</div></li>
+						<li><div>7</div></li>
+						<li><div>8</div></li>
+						<li><div>9</div></li>
+						<li><div>10</div></li>
+						<li><div>11</div></li>
+						<li><div>12</div></li>
+						<li><div>13</div></li>
+						<li><div>14</div></li>
+						<li><div>15</div></li>
+						<li><div>16</div></li>
+						<li><div>17</div></li>
+						<li><div>18</div></li>
+						<li><div>19</div></li>
+						<li><div>20</div></li>
+					</ul>
+				</div>
+				<div id="pages_after">
+					<span>loding</span>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	
+</body>
+</html>
