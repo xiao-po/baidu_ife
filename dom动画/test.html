@@ -4,81 +4,83 @@
 <head>
     <title>task7</title>
     <script>
-    var pre = document.getElementById("preOrder");
-    var in0 = document.getElementById("inOrder");
-    var post0 = document.getElementById("postOrder");
-    var root = document.getElementsByClassName("item")[0];
-    var data = [];
-    var head, timer;
+    // var pre = document.getElementById("preOrder");
+    // var in0 = document.getElementById("inOrder");
+    // var post0 = document.getElementById("postOrder");
+    // var root = document.getElementsByClassName("item")[0];
+    // var data = [];
+    // var head, timer;
 
-    function preOrder(node) { //前序遍历
-        if (node != null) {
-            data.push(node);
-            preOrder(node.firstElementChild);
-            preOrder(node.lastElementChild);
-        }
-    }
+    // function preOrder(node) { //前序遍历
+    //     if (node != null) {
+    //         data.push(node);
+    //         preOrder(node.firstElementChild);
+    //         preOrder(node.lastElementChild);
+    //     }
+    // }
 
-    function inOrder(node) { //中序遍历
-        if (node != null) {
-            inOrder(node.firstElementChild);
-            data.push(node);
-            inOrder(node.lastElementChild);
-        }
-    }
+    // function inOrder(node) { //中序遍历
+    //     if (node != null) {
+    //         inOrder(node.firstElementChild);
+    //         data.push(node);
+    //         inOrder(node.lastElementChild);
+    //     }
+    // }
 
-    function postOrder(node) { //后序遍历
-        if (node != null) {
-            postOrder(node.firstElementChild);
-            postOrder(node.lastElementChild);
-            data.push(node);
-        }
-    }
-    //重置
-    function clear(arr) {
-        if (arr.length > 0) {
-            clearTimeout(timer);
-            head.style.backgroundColor = "#fff";
-            arr = [];
+    // function postOrder(node) { //后序遍历
+    //     if (node != null) {
+    //         postOrder(node.firstElementChild);
+    //         postOrder(node.lastElementChild);
+    //         data.push(node);
+    //     }
+    // }
+    // //重置
+    // function clear(arr) {
+    //     if (arr.length > 0) {
+    //         clearTimeout(timer);
+    //         head.style.backgroundColor = "#fff";
+    //         arr = [];
 
-        }
-    }
-    //显示
-    function show() {
-        head = data.shift();
-        if (head) {
-            if (head.firstElementChild) {
-                head.style.backgroundColor = "#ff0000";
-                head.lastElementChild.style.backgroundColor = "#fff";
-                head.firstElementChild.style.backgroundColor = "#fff";
-                timer = setTimeout(function() {
-                    head.style.backgroundColor = "#fff";
-                    show();
-                }, 1000)
-            } else {
-                head.style.backgroundColor = "#ff0000";
-                timer = setTimeout(function() {
-                    head.style.backgroundColor = "#fff";
-                    show();
-                }, 500)
-            }
-        }
-    }
-    pre.addEventListener("click", function() {
-        clear(data);
-        preOrder(root);
-        show();
-    });
-    in0.addEventListener('click', function() {
-        clear(data);
-        inOrder(root);
-        show();
-    });
-    post0.addEventListener('click', function() {
-        clear(data);
-        postOrder(root);
-        show();
-    })
+    //     }
+    // }
+    // //显示
+    // function show() {
+    //     head = data.shift();
+    //     if (head) {
+    //         if (head.firstElementChild) {
+    //             head.style.backgroundColor = "#ff0000";
+    //             head.lastElementChild.style.backgroundColor = "#fff";
+    //             head.firstElementChild.style.backgroundColor = "#fff";
+    //             timer = setTimeout(function() {
+    //                 head.style.backgroundColor = "#fff";
+    //                 show();
+    //             }, 1000)
+    //         } else {
+    //             head.style.backgroundColor = "#ff0000";
+    //             timer = setTimeout(function() {
+    //                 head.style.backgroundColor = "#fff";
+    //                 show();
+    //             }, 500)
+    //         }
+    //     }
+    // }
+    // pre.addEventListener("click", function() {
+    //     clear(data);
+    //     preOrder(root);
+    //     show();
+    // });
+    // in0.addEventListener('click', function() {
+    //     clear(data);
+    //     inOrder(root);
+    //     show();
+    // });
+    // post0.addEventListener('click', function() {
+    //     clear(data);
+    //     postOrder(root);
+    //     show();
+    // })
+    var test = {};
+    alert("test")
     </script>
     <style type="text/css">
     .box {
